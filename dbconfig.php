@@ -4,6 +4,7 @@ $dbhost   = 'mysql.hostinger.vn';
 $dbname   = 'u361201188_test';
 $dbuser   = 'u361201188_khoa';
 $dbpass   = 'khoaDang@12';
+
 $options = array(
     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 );
@@ -18,14 +19,14 @@ catch(PDOException $e) {
 }
 
 function cleanUserInput($input) {
-  	if (get_magic_quotes_gpc()) {
-  		  $clean = mysql_real_escape_string(stripslashes($input));
-  	} else {
-  		  $clean = mysql_real_escape_string($input);
-  	}
+    if (get_magic_quotes_gpc()) {
+          $clean = mysql_real_escape_string(stripslashes($input));
+    } else {
+          $clean = mysql_real_escape_string($input);
+    }
     $clean = htmlentities($input, ENT_QUOTES, 'UTF-8');
     
-  	return $clean;
+    return $clean;
 }
 
 /**
@@ -33,7 +34,7 @@ function cleanUserInput($input) {
  * @param array $name - one dimension
  * @param array $where - two dimension
  */
-function selectData($table = "", $name = array(), $where = array(), $is_single = 0, $limit=0, $offset=0, $groupby = '', $orderby = array(), $sort = 'ASC')
+function selectData($table = "", $name = array(), $where = array(), $is_single = 0, $offset=0, $limit=0, $groupby = '', $orderby = array(), $sort = 'ASC')
 {
     if (empty($table)) return false;
     
@@ -64,11 +65,12 @@ function selectData($table = "", $name = array(), $where = array(), $is_single =
     }
     
     // Limit
-    $sLimit = "";
-    if (!empty($offset)) {
-        $sLimit = sprintf(" LIMIT %d,%d", $limit, $offset);
+    $sLimit = '';
+    if($offset >=0 && $limit > 0){
+        $sLimit = sprintf(" LIMIT %d,%d", $offset, $limit);    
     }
     
+
     // Group by
     $sGroupBy = "";
     if (!empty($groupby)) {
@@ -81,8 +83,8 @@ function selectData($table = "", $name = array(), $where = array(), $is_single =
         $sOrderBy = implode(",", $orderby);
         $sSort = sprintf(" ORDER BY %s %s", $sOrderBy, $sort);
     }
-    
-    $sql = sprintf("SELECT %s FROM %s %s %s %s %s", $sSelStr, $table, $sWhereStr, $sGroupBy, $sSort, $sLimit);//echo $sql;
+    $sql = sprintf("SELECT %s FROM %s%s%s%s%s", $sSelStr, $table, $sWhereStr, $sGroupBy, $sSort, $sLimit);
+    //echo $sql; exit();
     $STH = $DBH->prepare($sql);
     $STH->setFetchMode(PDO::FETCH_ASSOC);
     $STH->execute();
@@ -122,11 +124,12 @@ function insertData($table = "", $data = array())
     
     $aNameStr = array();
     foreach ($data as $key => $value) {
-        $aNameStr[] = $key;
+        $aNameStr[] = sprintf("`%s`", $key);
         $aValueStr[] = sprintf("'%s'", $value);
     }
     
-    $sql = sprintf("INSERT INTO $table (%s) VALUES (%s)", implode(",", $aNameStr), implode(",", $aValueStr));//echo $sql;
+    $sql = sprintf("INSERT INTO $table (%s) VALUES (%s)", implode(",", $aNameStr), implode(",", $aValueStr));
+    //echo $sql; exit();
     $STH = $DBH->prepare($sql);
     $STH->execute();
     
