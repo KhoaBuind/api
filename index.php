@@ -1,4 +1,7 @@
 <?php
+echo $_SERVER['SERVER_ADDR'];
+echo $_SERVER['SERVER_NAME'];
+exit();
 include "dbconfig.php";
 $string = file_get_contents("http://latte.lozi.vn/v1.2/topics/1/photos?t=popular&cityId=50");
 $json_a = json_decode($string, true);
