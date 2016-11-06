@@ -1,9 +1,14 @@
 <?php
-$ip = getenv('REMOTE_ADDR');
+$ip = '118.68.119.117';//getenv('REMOTE_ADDR');
 switch ($ip){
-    case '118.68.119.117' : require_once "config/production/config.php";
-    case '127.0.0.1' : require_once "config/local/config.php";
+    case '118.68.119.117' :
+        require_once "config/production/config.php";
+        break;
+    case '127.0.0.1' :
+        require_once "config/local/config.php";
+        break;
     //case '172.31.20.241' : require_once "config/production/config.php";
+    //break;
 }
 
 $dbhost = $config['database']['host'];
