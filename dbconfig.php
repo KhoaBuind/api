@@ -1,9 +1,15 @@
 <?php
-// Database configuration
-$dbhost   = 'mysql.hostinger.vn';
-$dbname   = 'u361201188_test';
-$dbuser   = 'u361201188_khoa';
-$dbpass   = 'khoaDang@12';
+$ip = getenv('REMOTE_ADDR');
+switch ($ip){
+    case '172.31.20.241' : require_once "config/production/config.php";
+    case '127.0.0.1' : require_once "config/local/config.php";
+    case '172.31.20.241' : require_once "config/production/config.php";
+}
+$dbhost = $config['database']['host'];
+$dbuser = $config['database']['username'];
+$dbname = $config['database']['dbname'];
+$dbpass = $config['database']['password'];
+
 
 $options = array(
     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
