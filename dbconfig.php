@@ -16,10 +16,6 @@ $dbuser = $config['database']['username'];
 $dbname = $config['database']['dbname'];
 $dbpass = $config['database']['password'];
 
-echo "<pre>";
-print_r($config['database']);
-echo "</pre>";
-
 $options = array(
     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 );
