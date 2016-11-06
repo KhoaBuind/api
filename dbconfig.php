@@ -5,7 +5,7 @@ switch ($ip){
     case '127.0.0.1' : require_once "config/local/config.php";
     //case '172.31.20.241' : require_once "config/production/config.php";
 }
-echo $ip;
+echo $ip; echo "</br>";
 echo $dbhost;
 exit();
 $dbhost = $config['database']['host'];
