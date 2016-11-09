@@ -1,5 +1,5 @@
 <?php
-$ip = '118.68.119.117';//getenv('REMOTE_ADDR');
+$ip = getenv('REMOTE_ADDR');
 switch ($ip){
     case '118.68.119.117' :
         require_once "config/production/config.php";
