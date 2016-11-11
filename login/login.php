@@ -18,8 +18,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $password = $_POST['password'];
     // get the user by email and password
     $user = $db->getUserByEmailAndPassword($email, $password);
-    var_dump(123123); 
-    die(123);
     if ($user != false) {
         // use is found
         $response["error"] = FALSE;
