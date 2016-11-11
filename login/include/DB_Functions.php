@@ -61,7 +61,7 @@ class DB_Functions {
         //$stmt->bind_param("s", $email);
         //var_dump(1);die();
         if ($stmt->execute()) {
-            var_dump(123);die();
+            //var_dump(123);die();
             $user = $stmt->get_result()->fetch_assoc();
             $stmt->close();
 
