@@ -63,6 +63,7 @@ class DB_Functions {
         if ($stmt->execute()) {
             //var_dump(123);die();
             $user = $stmt->get_result()->fetch_assoc();
+            var_dump($user); die();
             $stmt->close();
             // verifying user password
             $salt = $user['salt'];
