@@ -9,7 +9,7 @@ require_once 'include/DB_Functions.php';
 $db = new DB_Functions();
 
 // json response array
-$response = array("error" => FALSE);
+$response = array("error" => 404);
 
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
 
@@ -21,7 +21,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
     // check if user is already existed with the same email
     if ($db->isUserExisted($email)) {
         // user already existed
-        $response["error"] = TRUE;
+        $response["error"] = 201;
         $response["error_msg"] = "User already existed with " . $email;
         echo json_encode($response);
     } else {
@@ -29,7 +29,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
         $user = $db->storeUser($name, $email, $password);
         if ($user) {
             // user stored successfully
-            $response["error"] = FALSE;
+            $response["error"] = 200;
             $response["uid"] = $user["unique_id"];
             $response["user"]["name"] = $user["name"];
             $response["user"]["email"] = $user["email"];
@@ -38,13 +38,13 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
             echo json_encode($response);
         } else {
             // user failed to store
-            $response["error"] = TRUE;
+            $response["error"] = 405;
             $response["error_msg"] = "Unknown error occurred in registration!";
             echo json_encode($response);
         }
     }
 } else {
-    $response["error"] = TRUE;
+    $response["error"] = 401;
     $response["error_msg"] = "Required parameters (name, email or password) is missing!";
     echo json_encode($response);
 }
