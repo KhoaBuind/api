@@ -55,11 +55,9 @@ class DB_Functions {
      * Get user by email and password
      */
     public function getUserByEmailAndPassword($email, $password) {
-        
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = '$email'");
-        //var_dump($stmt); die();
-        //$stmt->bind_param("s", $email);
-        //var_dump(1);die();
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+
         if ($stmt->execute()) {
             //var_dump(123);die();
             $user = $stmt->get_result()->fetch_assoc();
